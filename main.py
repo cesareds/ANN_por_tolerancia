@@ -10,7 +10,7 @@ SIZE4 = 4
 
 
 def bis(f, a, b, n, p):
-    iteracao = 1
+    iteracao = 0
     fa = f(a)
     fb = f(b)
     if fa * fb >= 0:
@@ -34,12 +34,13 @@ def bis(f, a, b, n, p):
             else:
                 a = m
                 fa = fm
-        print("%.16f,\n" % m)
         print(iteracao)
+        print(",%.16f,\n" % m)
+
 
 
 def newton(f, df, x0, n):
-    iteracao = 1
+    iteracao = 0
     while tol < abs(f(x0)):
         dfx0 = df(x0)
         if dfx0 == 0:
@@ -51,13 +52,13 @@ def newton(f, df, x0, n):
 
         iteracao += 1
         x0 = xi
-    print("%.16f,\n" % xi)
     print(iteracao)
+    print(",%.16f,\n" % xi)
+
 
 
 def secant(f, x0, x1, n):
-    iteracao = 1
-    i2 = 0
+    iteracao = 0
     while tol < abs(f(x0)):
         fx0 = f(x0)
         fx1 = f(x1)
@@ -69,14 +70,15 @@ def secant(f, x0, x1, n):
         iteracao += 1
         x0 = x1
         x1 = x2
-    print("%.16f,\n" % x2)
     print(iteracao)
+    print(",%.16f,\n" % x2)
+
 
 
 def false_position(f, a, b, tol, n):
     fa = f(a)
     fb = f(b)
-    iteracao = 1
+    iteracao = 0
     if fa * fb >= 0:
         print(f"O Teorema de Bolzano não sabe dizer se existe raiz para f no intervalo [{a:.16f}, {b:.16f}]")
         return
@@ -97,37 +99,38 @@ def false_position(f, a, b, tol, n):
             else:
                 a = x
                 fa = fx
-    print("%.16f,\n" % x)
     print(iteracao)
+    print(",%.16f,\n" % x)
+
 
 
 def f(x):
-    return math.exp(3*x)-5
+    return math.exp(3 * x) - 5
 
 
 def d_f(x):
-    return 3*math.exp(3*x)
+    return 3 * math.exp(3 * x)
 
-tol = 1.55836e-09
 
-a_bisection = -0.44225
-b_bisection = 2.037105
+tol = 3.83931e-07
 
-x0_newton = 1.660578
+a_bisection = -0.559505
+b_bisection = 2.066344
 
-x0_secant = -0.49591
-x1_secant = 1.254506
+x0_newton = -1.648503
 
-b_false_position = -0.929181
-a_false_position = 1.053206
+x0_secant = -0.495919
+x1_secant = 2.894597
 
+b_false_position = -0.9914
+a_false_position = 3.828733
 
 n = 100
-print("\nbis:\n")
+# print("\nbis:\n")
 bis(f, a_bisection, b_bisection, n, tol)
-print("\nnewton:\n")
+# print("\nnewton:\n")
 newton(f, d_f, x0_newton, n)
-print("\nsecant:\n")
+# print("\nsecant:\n")
 secant(f, x0_secant, x1_secant, n)
-print("\nfalse_position:\n")
+# print("\nfalse_position:\n")
 false_position(f, a_false_position, b_false_position, tol, n)
