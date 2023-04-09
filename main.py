@@ -1,6 +1,7 @@
 import math
 from scipy import *
 from sympy import *
+from numpy import *
 
 PI = 3.14159265359
 SIZE1 = 4
@@ -70,7 +71,7 @@ def secant(f, x0, x1, n):
         iteracao += 1
         x0 = x1
         x1 = x2
-    print(iteracao)
+    print(iteracao-1)
     print(",%.16f,\n" % x2)
 
 
@@ -105,32 +106,22 @@ def false_position(f, a, b, tol, n):
 
 
 def f(x):
-    return math.exp(3 * x) - 5
+    return x**x-2
 
 
 def d_f(x):
-    return 3 * math.exp(3 * x)
+    return (x**x)*(ln(x) + 1)
 
+tol = 1.43118e-08
+data = {'false_position': {'a': 0.598018, 'b': 2.154695}, 'newton': {'x0': 3.322062}, 'bisection': {'a': 0.988093, 'b': 5.600357}, 'secant': {'x0': 0.707542, 'x1': 2.97655}}
 
-tol = 3.83931e-07
-
-a_bisection = -0.559505
-b_bisection = 2.066344
-
-x0_newton = -1.648503
-
-x0_secant = -0.495919
-x1_secant = 2.894597
-
-b_false_position = -0.9914
-a_false_position = 3.828733
 
 n = 100
 # print("\nbis:\n")
-bis(f, a_bisection, b_bisection, n, tol)
+bis(f, data['bisection']['a'], data['bisection']['b'], n, tol)
 # print("\nnewton:\n")
-newton(f, d_f, x0_newton, n)
+newton(f, d_f, data['newton']['x0'], n)
 # print("\nsecant:\n")
-secant(f, x0_secant, x1_secant, n)
+secant(f, data['secant']['x0'], data['secant']['x1'], n)
 # print("\nfalse_position:\n")
-false_position(f, a_false_position, b_false_position, tol, n)
+false_position(f, data['false_position']['a'], data['false_position']['b'], tol, n)
